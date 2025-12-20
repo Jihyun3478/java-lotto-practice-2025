@@ -9,6 +9,7 @@ public class Application {
     public static void main(String[] args) {
         int money = getMoney();
         List<Integer> winningNumber = getWinningNumber();
+        int bonusNumber = getBonusNumber();
     }
 
     private static int getMoney() {
@@ -51,6 +52,22 @@ public class Application {
                 return Arrays.stream(split).map(Integer::parseInt).toList();
             } catch (NumberFormatException exception) {
                 throw new IllegalArgumentException("[ERROR] 당첨 번호는 숫자여야 합니다.");
+            }
+        }
+    }
+
+    private static int getBonusNumber() {
+        System.out.println("보너스 번호를 입력해 주세요.");
+        while (true) {
+            try {
+                String input = Console.readLine();
+                if (Objects.isNull(input) || input.isBlank()) {
+                    throw new IllegalArgumentException("[ERROR] 입력값이 비어있습니다.");
+                }
+
+                return Integer.parseInt(input);
+            } catch (NumberFormatException exception) {
+                throw new IllegalArgumentException("[ERROR] 보너스 번호는 숫자여야 합니다.");
             }
         }
     }
