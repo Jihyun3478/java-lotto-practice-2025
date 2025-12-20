@@ -15,7 +15,7 @@ public class MoneyTest {
     class 구입금액_생성_테스트 {
         @Test
         @DisplayName("구입 금액은 1,000원 단위이다.")
-        void 구입_금액_생성_테스트() {
+        void 구입_금액을_생성한다() {
             Money money = new Money(5000);
             Assertions.assertThat(money.getValue()).isEqualTo(5000);
         }
