@@ -12,6 +12,10 @@ public class Money {
         return money;
     }
 
+    public int getTryCount() {
+        return money / 1000;
+    }
+
     private void validate(int money) {
         validateMoneyUnit(money);
         validateLowerBound(money);

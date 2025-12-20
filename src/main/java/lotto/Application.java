@@ -1,20 +1,20 @@
 package lotto;
 
 import camp.nextstep.edu.missionutils.Console;
-import camp.nextstep.edu.missionutils.Randoms;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class Application {
     public static void main(String[] args) {
-        int money = getMoney();
-        List<Integer> winningNumber = getWinningNumber();
-        int bonusNumber = getBonusNumber();
-        List<Integer> lotto = Randoms.pickUniqueNumbersInRange(1, 45, 6);
+        Money money = getMoney();
+        WinningNumber winningNumber = getWinningNumber();
+        BonusNumber bonusNumber = getBonusNumber();
+
+        Lottos lottos = Lottos.generate(money.getTryCount(), new RandomNumberGenerator());
     }
 
-    private static int getMoney() {
+    private static Money getMoney() {
         System.out.println("구입금액을 입력해 주세요.");
         while (true) {
             try {
@@ -23,14 +23,15 @@ public class Application {
                     throw new IllegalArgumentException("[ERROR] 입력값이 비어있습니다.");
                 }
 
-                return Integer.parseInt(input);
+                int money = Integer.parseInt(input);
+                return new Money(money);
             } catch (NumberFormatException exception) {
                 throw new IllegalArgumentException("[ERROR] 구입 금액은 숫자여야 합니다.");
             }
         }
     }
 
-    private static List<Integer> getWinningNumber() {
+    private static WinningNumber getWinningNumber() {
         System.out.println("당첨 번호를 입력해 주세요.");
         while (true) {
             try {
@@ -51,14 +52,15 @@ public class Application {
                 if (Arrays.stream(split).anyMatch(String::isBlank)) {
                     throw new IllegalArgumentException("[ERROR] 당첨 번호의 입력 형식이 올바르지 않습니다.");
                 }
-                return Arrays.stream(split).map(Integer::parseInt).toList();
+                List<Integer> winningNumber = Arrays.stream(split).map(Integer::parseInt).toList();
+                return new WinningNumber(winningNumber);
             } catch (NumberFormatException exception) {
                 throw new IllegalArgumentException("[ERROR] 당첨 번호는 숫자여야 합니다.");
             }
         }
     }
 
-    private static int getBonusNumber() {
+    private static BonusNumber getBonusNumber() {
         System.out.println("보너스 번호를 입력해 주세요.");
         while (true) {
             try {
@@ -67,7 +69,8 @@ public class Application {
                     throw new IllegalArgumentException("[ERROR] 입력값이 비어있습니다.");
                 }
 
-                return Integer.parseInt(input);
+                int bonusNumber = Integer.parseInt(input);
+                return new BonusNumber(bonusNumber);
             } catch (NumberFormatException exception) {
                 throw new IllegalArgumentException("[ERROR] 보너스 번호는 숫자여야 합니다.");
             }
