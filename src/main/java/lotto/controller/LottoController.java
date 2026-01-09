@@ -1,7 +1,13 @@
 package lotto.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import lotto.domain.Lotto;
+import lotto.domain.LottoManager;
 import lotto.domain.PurchaseAmount;
 import lotto.domain.WinningNumber;
+import lotto.service.NumberGenerator;
+import lotto.service.RandomNumberGenerator;
 import lotto.util.InputParser;
 import lotto.util.RetryHandler;
 import lotto.view.InputView;
@@ -18,7 +24,13 @@ public class LottoController {
 
     public void start() {
         PurchaseAmount purchaseAmount = inputPurchaseAmount();
+        int countByPurchaseAmount = purchaseAmount.countByPurchaseAmount();
+
         WinningNumber winningNumber = getWinningNumber();
+
+        LottoManager lottoManager = new LottoManager(new RandomNumberGenerator());
+        List<Lotto> lottos = lottoManager.publishLotto(countByPurchaseAmount);
+
     }
 
     private PurchaseAmount inputPurchaseAmount() {

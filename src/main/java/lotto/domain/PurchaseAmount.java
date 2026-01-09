@@ -8,6 +8,10 @@ public class PurchaseAmount {
         this.purchaseAmount = purchaseAmount;
     }
 
+    public int countByPurchaseAmount() {
+        return this.purchaseAmount / 1000;
+    }
+
     private void validate(int purchaseAmount) {
         validateDivide(purchaseAmount);
         validateMinimum(purchaseAmount);
