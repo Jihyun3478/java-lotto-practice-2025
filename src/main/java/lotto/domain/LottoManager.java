@@ -15,8 +15,15 @@ public class LottoManager {
         List<Lotto> lottos = new ArrayList<>();
         for (int count = 0; count < countByPurchaseAmount; count++) {
             List<Integer> randomNumbers = numberGenerator.generate();
-            lottos.add(new Lotto(randomNumbers));
+            List<Integer> sortNumbers = sort(randomNumbers);
+            lottos.add(new Lotto(sortNumbers));
         }
         return lottos;
+    }
+
+    private List<Integer> sort(List<Integer> lottos) {
+        return lottos.stream()
+                .sorted()
+                .toList();
     }
 }

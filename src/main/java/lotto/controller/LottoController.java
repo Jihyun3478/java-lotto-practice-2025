@@ -26,11 +26,17 @@ public class LottoController {
         PurchaseAmount purchaseAmount = inputPurchaseAmount();
         int countByPurchaseAmount = purchaseAmount.countByPurchaseAmount();
 
-        WinningNumber winningNumber = getWinningNumber();
+        List<Lotto> lottos = getLottos(countByPurchaseAmount);
 
+        WinningNumber winningNumber = getWinningNumber();
+    }
+
+    private List<Lotto> getLottos(int countByPurchaseAmount) {
         LottoManager lottoManager = new LottoManager(new RandomNumberGenerator());
         List<Lotto> lottos = lottoManager.publishLotto(countByPurchaseAmount);
 
+        outputView.printLottos(countByPurchaseAmount, lottos);
+        return lottos;
     }
 
     private PurchaseAmount inputPurchaseAmount() {

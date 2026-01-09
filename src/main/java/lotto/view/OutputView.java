@@ -1,21 +1,19 @@
 package lotto.view;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import lotto.domain.Lotto;
+
 public class OutputView {
     private static final String NEW_LINE = "\n";
 
-    public void start() {
-        System.out.println("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.");
-    }
-
-    public void prompt() {
-        System.out.println("");
-    }
-
-    public void finish() {
-        System.out.print("");
-    }
-
-    public void printErrorMessage(IllegalArgumentException exception) {
-        System.out.println(exception.getMessage());
+    public void printLottos(int countByPublishAmount, List<Lotto> lottos) {
+        System.out.println(NEW_LINE + countByPublishAmount + "개를 구매했습니다.");
+        for (Lotto lotto : lottos) {
+            String formatLotto = lotto.getNumbers().stream()
+                    .map(String::valueOf)
+                    .collect(Collectors.joining(", ", "[", "]"));
+            System.out.println(formatLotto);
+        }
     }
 }
