@@ -1,6 +1,7 @@
 package lotto.controller;
 
 import lotto.domain.PurchaseAmount;
+import lotto.domain.WinningNumber;
 import lotto.util.InputParser;
 import lotto.util.RetryHandler;
 import lotto.view.InputView;
@@ -17,12 +18,20 @@ public class LottoController {
 
     public void start() {
         PurchaseAmount purchaseAmount = getPurchaseAmount();
+        WinningNumber winningNumber = getWinningNumber();
     }
 
     private PurchaseAmount getPurchaseAmount() {
         return RetryHandler.retryUntilSuccessWithReturn(() -> {
             String input = inputView.readPurchaseAmount();
             return new PurchaseAmount(InputParser.parseNumber(input));
+        });
+    }
+
+    private WinningNumber getWinningNumber() {
+        return RetryHandler.retryUntilSuccessWithReturn(() -> {
+            String input = inputView.readWinningNumber();
+            return new WinningNumber(InputParser.parseWinningNumber(input));
         });
     }
 }
