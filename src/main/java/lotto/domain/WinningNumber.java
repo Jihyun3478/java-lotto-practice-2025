@@ -57,4 +57,12 @@ public class WinningNumber {
             throw new IllegalArgumentException("[ERROR] 보너스 번호는 1과 45 사이의 숫자여야 합니다. 다시 입력해주세요.");
         }
     }
+
+    public List<Integer> getWinningNumber() {
+        return winningNumber;
+    }
+
+    public int getBonusNumber() {
+        return bonusNumber;
+    }
 }

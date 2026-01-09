@@ -16,6 +16,22 @@ public class Lotto {
         }
     }
 
+    public int countHowMatch(List<Integer> winningNumbers) {
+        int matchCount = 0;
+        for (int number : numbers) {
+            for (int winningNumber : winningNumbers) {
+                if (number == winningNumber) {
+                    matchCount++;
+                }
+            }
+        }
+        return matchCount;
+    }
+
+    public boolean isMatch(int bonusNumber) {
+        return numbers.contains(bonusNumber);
+    }
+
     public List<Integer> getNumbers() {
         return numbers;
     }

@@ -2,10 +2,12 @@ package lotto.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import lotto.domain.Lotto;
 import lotto.domain.LottoManager;
 import lotto.domain.PurchaseAmount;
 import lotto.domain.WinningNumber;
+import lotto.domain.WinningStatistics;
 import lotto.service.NumberGenerator;
 import lotto.service.RandomNumberGenerator;
 import lotto.util.InputParser;
@@ -26,17 +28,18 @@ public class LottoController {
         PurchaseAmount purchaseAmount = inputPurchaseAmount();
         int countByPurchaseAmount = purchaseAmount.countByPurchaseAmount();
 
-        List<Lotto> lottos = getLottos(countByPurchaseAmount);
-
-        WinningNumber winningNumber = getWinningNumber();
-    }
-
-    private List<Lotto> getLottos(int countByPurchaseAmount) {
         LottoManager lottoManager = new LottoManager(new RandomNumberGenerator());
         List<Lotto> lottos = lottoManager.publishLotto(countByPurchaseAmount);
 
         outputView.printLottos(countByPurchaseAmount, lottos);
-        return lottos;
+
+        WinningNumber winningNumber = getWinningNumber();
+
+        Map<WinningStatistics, Integer> winningResult = lottoManager.getWinningResult(lottos,
+                winningNumber.getWinningNumber(), winningNumber.getBonusNumber());
+        double profitRate = lottoManager.getProfitRate(purchaseAmount.getPurchaseAmount());
+
+        outputView.printWinningStatistics(winningResult, profitRate);
     }
 
     private PurchaseAmount inputPurchaseAmount() {
