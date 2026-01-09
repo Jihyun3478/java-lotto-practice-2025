@@ -17,11 +17,11 @@ public class LottoController {
     }
 
     public void start() {
-        PurchaseAmount purchaseAmount = getPurchaseAmount();
+        PurchaseAmount purchaseAmount = inputPurchaseAmount();
         WinningNumber winningNumber = getWinningNumber();
     }
 
-    private PurchaseAmount getPurchaseAmount() {
+    private PurchaseAmount inputPurchaseAmount() {
         return RetryHandler.retryUntilSuccessWithReturn(() -> {
             String input = inputView.readPurchaseAmount();
             return new PurchaseAmount(InputParser.parseNumber(input));
@@ -29,9 +29,25 @@ public class LottoController {
     }
 
     private WinningNumber getWinningNumber() {
+        WinningNumber winningNumber = inputWinningNumber();
+
+        int bonusNumber = inputBonusNumber();
+        winningNumber.addBonusNumber(bonusNumber);
+
+        return winningNumber;
+    }
+
+    private WinningNumber inputWinningNumber() {
         return RetryHandler.retryUntilSuccessWithReturn(() -> {
             String input = inputView.readWinningNumber();
             return new WinningNumber(InputParser.parseWinningNumber(input));
+        });
+    }
+
+    private int inputBonusNumber() {
+        return RetryHandler.retryUntilSuccessWithReturn(() -> {
+            String input = inputView.readBonusNumber();
+            return InputParser.parseNumber(input);
         });
     }
 }
